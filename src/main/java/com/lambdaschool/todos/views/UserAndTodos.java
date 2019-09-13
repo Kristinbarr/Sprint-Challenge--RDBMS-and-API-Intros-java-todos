@@ -1,7 +1,7 @@
 package com.lambdaschool.todos.views;
 
-public interface CountQuotes {
+public interface UserAndTodos {
     String getUsername();
 
-    int getCountquotes();
+    int getUserAndTodos();
 }

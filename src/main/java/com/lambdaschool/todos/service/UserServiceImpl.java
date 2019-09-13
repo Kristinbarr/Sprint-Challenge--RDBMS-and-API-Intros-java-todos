@@ -1,6 +1,6 @@
 package com.lambdaschool.todos.service;
 
-import com.lambdaschool.todos.model.Quote;
+import com.lambdaschool.todos.model.Todo;
 import com.lambdaschool.todos.model.User;
 import com.lambdaschool.todos.model.UserRoles;
 import com.lambdaschool.todos.repository.RoleRepository;
@@ -69,8 +69,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
         newUser.setUserRoles(newRoles);
 
-        for (Quote q : user.getQuotes()) {
-            newUser.getQuotes().add(new Quote(q.getQuote(), newUser));
+        for (Todo q : user.getTodos()) {
+            newUser.getTodos().add(new Todo(q.getDescription(), q.getDatestarted(), newUser));
         }
 
         return userrepos.save(newUser);
@@ -112,12 +112,18 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             }
         }
 
-        if (user.getQuotes().size() > 0) {
-            for (Quote q : user.getQuotes()) {
-                currentUser.getQuotes().add(new Quote(q.getQuote(), currentUser));
+        if (user.getTodos().size() > 0) {
+            for (Todo q : user.getTodos()) {
+                currentUser.getTodos().add(new Todo(q.getDescription(), q.getDatestarted(), currentUser));
             }
         }
         return userrepos.save(currentUser);
+    }
+
+    @Override
+    public User findUserAndTodos() {
+
+        return null;
     }
 }
 
