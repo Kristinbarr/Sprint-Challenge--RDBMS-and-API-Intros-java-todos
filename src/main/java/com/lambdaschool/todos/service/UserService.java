@@ -1,5 +1,6 @@
 package com.lambdaschool.todos.service;
 
+import com.lambdaschool.todos.model.Todo;
 import com.lambdaschool.todos.model.User;
 
 import java.util.List;
@@ -18,5 +19,7 @@ public interface UserService {
 
     User update(User user, long id);
 
-    User findUserAndTodos();
+    User findUserTodos(String name);
+
+
 }

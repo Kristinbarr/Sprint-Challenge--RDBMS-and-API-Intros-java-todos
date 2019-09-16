@@ -16,7 +16,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Transactional
 @Service(value = "userService")
 public class UserServiceImpl implements UserDetailsService, UserService {
 
@@ -44,6 +44,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public List<User> findAll() {
         List<User> list = new ArrayList<>();
         userrepos.findAll().iterator().forEachRemaining(list::add);
+        for (User e : list) {
+            System.out.println(e.getUsername());
+        }
         return list;
     }
 
@@ -69,7 +72,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
         newUser.setUserRoles(newRoles);
 
+
         for (Todo q : user.getTodos()) {
+            System.out.println(q.getDescription());
             newUser.getTodos().add(new Todo(q.getDescription(), q.getDatestarted(), newUser));
         }
 
@@ -121,9 +126,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public User findUserAndTodos() {
+    public User findUserTodos(String name) {
+        User currentUser = userrepos.findByUsername(name);
 
-        return null;
+        if (currentUser != null) {
+            return currentUser;
+        } else {
+            throw new EntityNotFoundException(name);
+        }
     }
 }
 

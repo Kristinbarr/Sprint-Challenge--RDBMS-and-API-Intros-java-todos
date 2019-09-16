@@ -1,10 +1,7 @@
 package com.lambdaschool.todos.service;
 
 import com.lambdaschool.todos.model.Todo;
-import com.lambdaschool.todos.model.User;
-import com.lambdaschool.todos.views.CountTodos;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface TodoService {
@@ -12,15 +9,14 @@ public interface TodoService {
 
     Todo findTodoById(long id);
 
+    Todo findTodoByName(String name);
+
     List<Todo> findByUserName(String username);
 
     void delete(long id);
 
-    Todo save(Todo todo);
+    Todo save(Todo todo, long userid);
 
     Todo update(Todo todo, long id);
 
-    ArrayList<CountTodos> getCountTodos();
-
-//    List<User> getUserAndTodos();
 }

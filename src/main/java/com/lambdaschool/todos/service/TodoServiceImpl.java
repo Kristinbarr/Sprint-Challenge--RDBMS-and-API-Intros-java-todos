@@ -1,8 +1,9 @@
 package com.lambdaschool.todos.service;
 
 import com.lambdaschool.todos.model.Todo;
+import com.lambdaschool.todos.model.User;
 import com.lambdaschool.todos.repository.TodoRepository;
-import com.lambdaschool.todos.views.CountTodos;
+import com.lambdaschool.todos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,16 +12,25 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service(value = "todoService")
 public class TodoServiceImpl implements TodoService {
     @Autowired
     private TodoRepository todorepos;
+
+    @Autowired
+    private UserRepository userrepos;
 
     @Override
     public List<Todo> findAll() {
         List<Todo> list = new ArrayList<>();
         todorepos.findAll().iterator().forEachRemaining(list::add);
         return list;
+    }
+
+    @Override
+    public Todo findTodoByName(String name) {
+        return null;
     }
 
     @Override
@@ -39,7 +49,10 @@ public class TodoServiceImpl implements TodoService {
 
     @Transactional
     @Override
-    public Todo save(Todo todo) {
+    public Todo save(Todo todo, long userid) {
+
+        User currentUser = userrepos.findById(userid);
+
         return todorepos.save(todo);
     }
 
@@ -67,8 +80,5 @@ public class TodoServiceImpl implements TodoService {
         return todorepos.save(newTodo);
     }
 
-    @Override
-    public ArrayList<CountTodos> getCountTodos() {
-        return todorepos.getCountTodos();
-    }
+
 }

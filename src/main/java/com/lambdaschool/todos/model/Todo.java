@@ -10,7 +10,7 @@ import java.util.Date;
 public class Todo extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long todosid;
+    private long todoid;
 
     @Column(nullable = false)
     private String description;
@@ -33,12 +33,12 @@ public class Todo extends Auditable {
         this.user = user;
     }
 
-    public long getTodosid() {
-        return todosid;
+    public long getTodoid() {
+        return todoid;
     }
 
-    public void setTodosid(long todosid) {
-        this.todosid = todosid;
+    public void setTodoid(long todoid) {
+        this.todoid = todoid;
     }
 
     public String getDescription() {
@@ -72,4 +72,12 @@ public class Todo extends Auditable {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Info:" + description + " " + datestarted;
+    }
+
+
+
 }

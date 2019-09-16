@@ -2,7 +2,6 @@ package com.lambdaschool.todos.controller;
 
 import com.lambdaschool.todos.model.Todo;
 import com.lambdaschool.todos.service.TodoService;
-import com.lambdaschool.todos.views.CountTodos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -54,7 +53,7 @@ public class TodosController {
 
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
-        URI newTodoURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{todoid}").buildAndExpand(newTodo.getTodosid()).toUri();
+        URI newTodoURI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{todoid}").buildAndExpand(newTodo.getTodoid()).toUri();
         responseHeaders.setLocation(newTodoURI);
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
@@ -74,12 +73,12 @@ public class TodosController {
         todoService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    // localhost:2019/todos/todoscount
-    @GetMapping(value = "/todoscount", produces = {"application/json"})
-    public ResponseEntity<?> getTodosCount() {
-        ArrayList<CountTodos> myList = todoService.getCountTodos();
-        myList.sort((q1, q2) -> q1.getUsername().compareToIgnoreCase(q2.getUsername()));
-        return new ResponseEntity<>(myList, HttpStatus.OK);
-    }
+//
+//    // localhost:2019/todos/todoscount
+//    @GetMapping(value = "/todoscount", produces = {"application/json"})
+//    public ResponseEntity<?> getTodosCount() {
+//        ArrayList<CountTodos> myList = todoService.getCountTodos();
+//        myList.sort((q1, q2) -> q1.getUsername().compareToIgnoreCase(q2.getUsername()));
+//        return new ResponseEntity<>(myList, HttpStatus.OK);
+//    }
 }

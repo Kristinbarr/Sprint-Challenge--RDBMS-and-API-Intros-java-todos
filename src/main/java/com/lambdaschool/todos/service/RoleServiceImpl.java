@@ -10,6 +10,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service(value = "roleService")
 public class RoleServiceImpl implements RoleService {
     @Autowired
