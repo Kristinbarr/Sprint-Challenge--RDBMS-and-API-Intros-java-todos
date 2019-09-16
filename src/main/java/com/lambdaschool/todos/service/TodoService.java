@@ -13,9 +13,11 @@ public interface TodoService {
 
     List<Todo> findByUserName(String username);
 
+    Todo save(Todo todo);
+
     void delete(long id);
 
-    Todo save(Todo todo, long userid);
+    Todo addTodo(Todo todo, long userid);
 
     Todo update(Todo todo, long id);
 

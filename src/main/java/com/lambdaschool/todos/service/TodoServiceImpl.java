@@ -49,9 +49,16 @@ public class TodoServiceImpl implements TodoService {
 
     @Transactional
     @Override
-    public Todo save(Todo todo, long userid) {
+    public Todo save(Todo todo)
+    {
+        return todorepos.save(todo);
+    }
 
-        User currentUser = userrepos.findById(userid);
+    @Transactional
+    @Override
+    public Todo addTodo(Todo todo, long userid) {
+
+//        User currentUser = userrepos.findById(userid);
 
         return todorepos.save(todo);
     }

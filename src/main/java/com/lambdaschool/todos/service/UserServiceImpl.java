@@ -4,6 +4,7 @@ import com.lambdaschool.todos.model.Todo;
 import com.lambdaschool.todos.model.User;
 import com.lambdaschool.todos.model.UserRoles;
 import com.lambdaschool.todos.repository.RoleRepository;
+import com.lambdaschool.todos.repository.TodoRepository;
 import com.lambdaschool.todos.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired
     private UserRepository userrepos;
+
+    @Autowired
+    private TodoRepository todorepos;
 
     @Autowired
     private RoleRepository rolerepos;
@@ -135,5 +139,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             throw new EntityNotFoundException(name);
         }
     }
+
 }
 

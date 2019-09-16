@@ -27,7 +27,6 @@ public class TodosController {
         return new ResponseEntity<>(allTodos, HttpStatus.OK);
     }
 
-
     @GetMapping(value = "/todo/{todoId}",
             produces = {"application/json"})
     public ResponseEntity<?> getTodo(@PathVariable Long todoId) {
@@ -59,13 +58,14 @@ public class TodosController {
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
+
+    // PUT - localhost:8000/todos/todo/{todoId} -  updates a todo based on todoid
     @PutMapping(value = "/todo/{todoid}")
-    public ResponseEntity<?> updateTodo(
-            @RequestBody Todo updateTodo,
-            @PathVariable long todoid) {
+    public ResponseEntity<?> updateTodo(@RequestBody Todo updateTodo, @PathVariable long todoid) {
         todoService.update(updateTodo, todoid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
     @DeleteMapping("/todo/{id}")
     public ResponseEntity<?> deleteTodoById(
@@ -73,12 +73,5 @@ public class TodosController {
         todoService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//
-//    // localhost:2019/todos/todoscount
-//    @GetMapping(value = "/todoscount", produces = {"application/json"})
-//    public ResponseEntity<?> getTodosCount() {
-//        ArrayList<CountTodos> myList = todoService.getCountTodos();
-//        myList.sort((q1, q2) -> q1.getUsername().compareToIgnoreCase(q2.getUsername()));
-//        return new ResponseEntity<>(myList, HttpStatus.OK);
-//    }
+
 }

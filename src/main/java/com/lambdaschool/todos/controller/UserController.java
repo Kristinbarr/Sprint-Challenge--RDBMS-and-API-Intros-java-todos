@@ -34,13 +34,7 @@ public class UserController {
         List<User> myUsers = userService.findAll();
         return new ResponseEntity<>(myUsers, HttpStatus.OK);
     }
-
-    // GET localhost:2019/users/user/2
-    @GetMapping(value = "/user/{userId}", produces = {"application/json"})
-    public ResponseEntity<?> getUser(@PathVariable Long userId) {
-        User u = userService.findUserById(userId);
-        return new ResponseEntity<>(u, HttpStatus.OK);
-    }
+    
 
 //  localhost:2019/users/mine
     @GetMapping(value = "/mine", produces = {"application/json"})
@@ -49,8 +43,9 @@ public class UserController {
     }
 
 
-    // POST localhost:2019/users/
-    @PostMapping(value = "", consumes = {"application/json"}, produces = {"application/json"})
+    // POST localhost:2019/users/ - adds a user. Can only be done by an admin.
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PostMapping(value = "/", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addNewUser(@Valid @RequestBody User newuser) throws URISyntaxException {
         for(Todo t : newuser.getTodos()) {
             System.out.println(t.toString());
@@ -72,18 +67,13 @@ public class UserController {
 
     // POST localhost:2019/users/todo/{userid}
     @PostMapping(value = "/todo/{userid}", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<?> addNewTodo(@Valid @RequestBody Todo newtodo, long userid) throws URISyntaxException {
-        newtodo = todoService.save(newtodo, userid);
+    public ResponseEntity<?> addNewTodo(@Valid @RequestBody Todo newtodo, @PathVariable long userid) throws URISyntaxException {
+        newtodo = todoService.addTodo(newtodo, userid);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/user/{id}")
-    public ResponseEntity<?> updateUser(@RequestBody User updateUser, @PathVariable long id) {
-        userService.update(updateUser, id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    // DELETE - localhost:8000/users/userid/{userId} - Delete user by userid and associated todos
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable long id) {
         userService.delete(id);
